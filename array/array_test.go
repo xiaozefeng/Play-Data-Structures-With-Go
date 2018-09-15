@@ -11,9 +11,9 @@ func TestAdd(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	arr.Add(1,1)
-	arr.Add(0,2)
-	arr.Add(2,3)
+	arr.Add(1, 1)
+	arr.Add(0, 2)
+	arr.Add(2, 3)
 	fmt.Printf("%s\n", arr)
 	// 2131
 	e, er := arr.Remove(0)
@@ -21,8 +21,4 @@ func TestAdd(t *testing.T) {
 		panic(er)
 	}
 	fmt.Printf("被删除的元素:%d\n", e)
-	fmt.Println(arr)
-
-
 }
-
