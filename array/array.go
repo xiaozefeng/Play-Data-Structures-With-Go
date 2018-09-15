@@ -5,12 +5,12 @@ import (
 	"fmt"
 )
 
-type array struct {
+type Array struct {
 	data []int
 	size int
 }
 
-func (arr *array) String() string {
+func (arr *Array) String() string {
 	result := ""
 	result = fmt.Sprintf("Array: len:%d, size:%d ", len(arr.data), arr.size)
 	result += fmt.Sprintf(", Data: ")
@@ -21,19 +21,27 @@ func (arr *array) String() string {
 }
 
 // the factory method
-func NewArrayWithCapacity(capacity int) *array {
-	return &array{
+func NewArrayWithCapacity(capacity int) *Array {
+	return &Array{
 		data: make([]int, capacity, capacity),
 		size: 0,
 	}
 }
 
-func NewArray() *array {
+func NewArray() *Array {
 	return NewArrayWithCapacity(10)
 }
 
+func (arr *Array) Size() int {
+	return arr.size
+}
+
+func (arr *Array) IsEmpty() bool {
+	return arr.size == 0
+}
+
 // 添加一个元素
-func (arr *array) Add(index, e int) (err error) {
+func (arr *Array) Add(index, e int) (err error) {
 	if arr.size == len(arr.data) {
 		arr.resize(len(arr.data) * 2)
 	}
@@ -44,22 +52,22 @@ func (arr *array) Add(index, e int) (err error) {
 		arr.data[i] = arr.data[i-1]
 	}
 	arr.data[index] = e
-	arr.size ++
+	arr.size++
 	return nil
 }
 
 // 在尾部添加一个元素
-func (arr *array) AddLast(e int) error {
+func (arr *Array) AddLast(e int) error {
 	return arr.Add(arr.size, e)
 }
 
 //在头部添加一个元素
-func (arr *array) AddFirst(e int) error {
+func (arr *Array) AddFirst(e int) error {
 	return arr.Add(0, e)
 }
 
 // 根据索引删除一个元素
-func (arr *array) Remove(index int) (e int, err error) {
+func (arr *Array) Remove(index int) (e int, err error) {
 	if index < 0 || index >= arr.size {
 		return 0, errors.New("index required >= 0 and < size")
 	}
@@ -67,7 +75,7 @@ func (arr *array) Remove(index int) (e int, err error) {
 	for i := index; i < arr.size; i++ {
 		arr.data[i] = arr.data[i+1]
 	}
-	arr.size --
+	arr.size--
 	// 只有四分之一的空间在用的时候，减少容量
 	if len(arr.data)/4 == arr.size && len(arr.data)/2 != 0 {
 		arr.resize(len(arr.data) / 2)
@@ -76,15 +84,15 @@ func (arr *array) Remove(index int) (e int, err error) {
 
 }
 
-func (arr *array) RemoveFirst() (e int, err error) {
+func (arr *Array) RemoveFirst() (e int, err error) {
 	return arr.Remove(0)
 }
 
-func (arr *array) RemoveLast() (e int, err error) {
-	return arr.Remove(arr.size)
+func (arr *Array) RemoveLast() (e int, err error) {
+	return arr.Remove(arr.size - 1)
 }
 
-func (arr *array) Contains(e int) bool {
+func (arr *Array) Contains(e int) bool {
 	for _, val := range arr.data {
 		if val == e {
 			return true
@@ -94,7 +102,7 @@ func (arr *array) Contains(e int) bool {
 }
 
 // 查找并删除第一个元素
-func (arr *array) RemoveElement(e int) bool {
+func (arr *Array) RemoveElement(e int) bool {
 	index := arr.Find(e)
 	if index != -1 {
 		arr.Remove(index)
@@ -104,7 +112,7 @@ func (arr *array) RemoveElement(e int) bool {
 }
 
 // 修改一个元素
-func (arr *array) Set(index, e int) (err error) {
+func (arr *Array) Set(index, e int) (err error) {
 	if index < 0 || index >= arr.size {
 		return errors.New("index required >= 0 and <size")
 	}
@@ -113,7 +121,7 @@ func (arr *array) Set(index, e int) (err error) {
 }
 
 // 根据元素查询索引
-func (arr *array) Find(e int) (index int) {
+func (arr *Array) Find(e int) (index int) {
 	for index, val := range arr.data {
 		if val == e {
 			return index
@@ -122,10 +130,20 @@ func (arr *array) Find(e int) (index int) {
 	return -1
 }
 
-func (arr *array) resize(capacity int) {
+func (arr *Array) resize(capacity int) {
 	newData := make([]int, capacity, capacity)
 	for i := 0; i < arr.size; i++ {
 		newData[i] = arr.data[i]
 	}
 	arr.data = newData
+}
+func (arr *Array) Get(index int) (e int, err error) {
+	if index < 0 || index >= arr.size {
+		return -1, errors.New("index required >0 and < size")
+	}
+	return arr.data[index], nil
+}
+
+func (arr *Array) GetLast() (e int, err error) {
+	return arr.Get(arr.size - 1)
 }
