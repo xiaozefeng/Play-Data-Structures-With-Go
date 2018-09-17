@@ -56,8 +56,7 @@ func NewStack() Stack {
 }
 
 func (st *ArrayStack) String() string {
-	v := ""
-	v += "[Stack: "
+	v := "[Stack: "
 	for i := st.arr.Size() - 1; i >= 0; i-- {
 		r, _ := st.arr.Get(i)
 		v += fmt.Sprintf("%v ", r)
