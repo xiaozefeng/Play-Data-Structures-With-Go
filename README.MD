@@ -20,3 +20,8 @@ O(n^2) ->  T = n * n
 当删除元素时，当前使用的空间是数组空间的四分之一的时候
 才进行缩容操作
 ```
+
+## ArrayQueue 为什么比 LoopQueue 性能更好?
+查看了一下代码，ArrayQueue使用了go语言的切片实现的，go 帮我处理了内存的释放，
+而且ArrayQueue 的 Dequeue方法，没有一位一位往后移, 而是直接使用 q.data = q.data[1:]
+直接抛弃了第一个元素
