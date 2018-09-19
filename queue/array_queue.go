@@ -1,6 +1,8 @@
 package queue
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func NewArrayQueue() Queue {
 	return &ArrayQueue{
@@ -28,14 +30,17 @@ func (q *ArrayQueue) Enqueue(e int) {
 }
 
 func (q *ArrayQueue) Dequeue() int {
-	ret := q.data[1]
+	if q.IsEmpty() {
+		panic("Dequeue failed. the queue is empty")
+	}
+	ret := q.data[0]
 	q.data = q.data[1:]
 	q.size--
 	return ret
 }
 
 func (q *ArrayQueue) GetFront() int {
-	return q.data[1]
+	return q.data[0]
 }
 
 func (q *ArrayQueue) String() string {

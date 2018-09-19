@@ -16,3 +16,23 @@ func TestNewLoopQueue(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkLoopQueue(b *testing.B) {
+	q := NewLoopQueue()
+	for i := 0; i < b.N; i++ {
+		q.Enqueue(i)
+	}
+	for i := 0; i < b.N; i++ {
+		q.Dequeue()
+	}
+}
+
+func BenchmarkArrayQueue(b *testing.B) {
+	q := NewArrayQueue()
+	for i := 0; i < b.N; i++ {
+		q.Enqueue(i)
+	}
+	for i := 0; i < b.N; i++ {
+		q.Dequeue()
+	}
+}
