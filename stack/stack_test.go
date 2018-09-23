@@ -25,3 +25,13 @@ func TestStack(t *testing.T) {
 	s.Pop()
 	fmt.Println(s)
 }
+
+func BenchmarkArrayStack(b *testing.B) {
+	s := NewStack()
+	for i := 0; i < b.N; i++ {
+		s.Push(i)
+	}
+	for i := 0; i < b.N; i++ {
+		s.Pop()
+	}
+}
