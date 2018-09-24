@@ -12,7 +12,7 @@ func Test_removeElements2(t *testing.T) {
 			Val: 2,
 		},
 	}
-	n := removeElements2(ln, 2)
+	n := removeElements3(ln, 1)
 	fmt.Println(n)
 
 }

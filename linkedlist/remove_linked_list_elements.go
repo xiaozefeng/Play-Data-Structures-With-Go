@@ -42,3 +42,15 @@ func removeElements2(head *ListNode, val int) *ListNode {
 	return dummyHead.Next
 
 }
+
+func removeElements3(head *ListNode, val int) *ListNode {
+	// 最基本的问题
+	if head == nil {
+		return nil
+	}
+	head.Next = removeElements3(head.Next, val)
+	if head.Val == val {
+		return head.Next
+	}
+	return head
+}
