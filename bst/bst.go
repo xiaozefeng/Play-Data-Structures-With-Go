@@ -118,6 +118,7 @@ func (b *BST) IsEmpty() bool {
 
 func (b *BST) Add(e int) {
 	b.root = b.add(b.root, e)
+	b.size++
 }
 
 // 向以nod{}e 为跟的二分搜索树中插入元素e , 递归算法
@@ -128,8 +129,10 @@ func (b *BST) add(n *node, e int) *node {
 	}
 	if e < n.val {
 		n.left = b.add(n.left, e)
+		b.size++
 	} else {
 		n.right = b.add(n.right, e)
+		b.size++
 	}
 	return n
 }
@@ -195,6 +198,87 @@ func (b *BST) traverse(n *node) {
 	b.traverse(n.right)
 }
 
+func (b *BST) MaxValueNR() int {
+	if b.size == 0 {
+		panic("BST is empty")
+	}
+	root := b.root
+	for root.right != nil {
+		root = root.right
+	}
+	return root.val
+}
+
+func (b *BST) Max() int {
+	if b.size == 0 {
+		panic("BST is empty")
+	}
+	return b.max(b.root).val
+}
+
+func (b *BST) max(node *node) *node {
+	if b.size == 0 {
+		panic("BST is empty")
+	}
+	if node.right == nil {
+		return node
+	}
+	return b.max(node.right)
+}
+
+func (b *BST) Minimum() int {
+	if b.size == 0 {
+		panic("BST is empty")
+	}
+	return b.minimum(b.root).val
+}
+
+func (b *BST) minimum(node *node) *node {
+	if node.left == nil {
+		return node
+	}
+	return b.minimum(node.left)
+}
+
+func (b *BST) RemoveMax() {
+	b.root = b.removeMax(b.root)
+}
+
+func (b *BST) removeMax(node *node) *node {
+	if node.right == nil {
+		left := node.left
+		node.left = nil
+		b.size--
+		return left
+	}
+	node.right = b.removeMax(node.right)
+	return node
+}
+
+func (b *BST) RemoveMin() {
+	b.root = b.removeMin(b.root)
+}
+
+func (b *BST) removeMin(node *node) *node {
+	if node.left == nil {
+		right := node.right
+		node.right = nil
+		b.size--
+		return right
+	}
+	node.left = b.removeMin(node.left)
+	return node
+}
+
+func (b *BST) MinValueNR() int {
+	root := b.root
+	for root.left != nil {
+		root = root.left
+	}
+	return root.val
+}
+
+// 层序遍历
 func (b *BST) LevelOrder() {
 	queue := newQueue()
 	queue.enQueue(b.root)
