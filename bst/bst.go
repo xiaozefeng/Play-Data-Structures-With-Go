@@ -362,3 +362,30 @@ func (b *BST) floor(node *node, e int) *node {
 	}
 	return node
 }
+
+func (b *BST) Rank(e int) int {
+	count := 0
+	result := 0
+	b.traverseFunc(b.root, func(node *node) {
+		count++
+		if node.val == e {
+			result = count
+			return
+		}
+	})
+	return result
+}
+
+
+func (b *BST) Select(rank int) (e int) {
+	count := 0
+	result := 0
+	b.traverseFunc(b.root, func(node *node) {
+		count++
+		if count == rank {
+			result = node.val
+			return
+		}
+	})
+	return result
+}

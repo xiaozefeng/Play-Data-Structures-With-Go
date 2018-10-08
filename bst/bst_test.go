@@ -99,7 +99,6 @@ func TestBST_Remove(t *testing.T) {
 
 	bst.Remove(5)
 	fmt.Println("bst remove element: ", bst)
-
 }
 
 func TestBST_Floor(t *testing.T) {
@@ -109,4 +108,21 @@ func TestBST_Floor(t *testing.T) {
 	bst.Add(10)
 	bst.Add(1)
 	fmt.Println("Floor:", bst.Floor(7))
+}
+
+func TestBST_Rank(t *testing.T) {
+	bst := newBST()
+	bst.Add(41)
+	bst.Add(22)
+	bst.Add(15)
+	bst.Add(13)
+	bst.Add(33)
+	bst.Add(37)
+	bst.Add(58)
+	bst.Add(50)
+	bst.Add(42)
+	bst.Add(53)
+	bst.Add(63)
+	fmt.Println("58的排名是", bst.Rank(58))
+	fmt.Println("排名10的元素是", bst.Select(10))
 }
