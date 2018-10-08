@@ -118,21 +118,19 @@ func (b *BST) IsEmpty() bool {
 
 func (b *BST) Add(e int) {
 	b.root = b.add(b.root, e)
-	b.size++
 }
 
 // 向以nod{}e 为跟的二分搜索树中插入元素e , 递归算法
 // 返回插入新节点后的二分搜索树的根
 func (b *BST) add(n *node, e int) *node {
 	if n == nil {
+		b.size++
 		return newNode(e)
 	}
 	if e < n.val {
 		n.left = b.add(n.left, e)
-		b.size++
-	} else {
+	} else if e > n.val {
 		n.right = b.add(n.right, e)
-		b.size++
 	}
 	return n
 }
@@ -217,9 +215,6 @@ func (b *BST) Max() int {
 }
 
 func (b *BST) max(node *node) *node {
-	if b.size == 0 {
-		panic("BST is empty")
-	}
 	if node.right == nil {
 		return node
 	}
@@ -240,8 +235,10 @@ func (b *BST) minimum(node *node) *node {
 	return b.minimum(node.left)
 }
 
-func (b *BST) RemoveMax() {
+func (b *BST) RemoveMax() int {
+	ret := b.Max()
 	b.root = b.removeMax(b.root)
+	return ret
 }
 
 func (b *BST) removeMax(node *node) *node {
@@ -255,8 +252,10 @@ func (b *BST) removeMax(node *node) *node {
 	return node
 }
 
-func (b *BST) RemoveMin() {
+func (b *BST) RemoveMin() int {
+	ret := b.Minimum()
 	b.root = b.removeMin(b.root)
+	return ret
 }
 
 func (b *BST) removeMin(node *node) *node {
