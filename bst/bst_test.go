@@ -89,3 +89,24 @@ func TestBST_RemoveMax(t *testing.T) {
 		}
 	}
 }
+
+func TestBST_Remove(t *testing.T) {
+	bst := newBST()
+	for i := 0; i < 10; i++ {
+		bst.Add(i)
+	}
+	fmt.Println(bst)
+
+	bst.Remove(5)
+	fmt.Println("bst remove element: ", bst)
+
+}
+
+func TestBST_Floor(t *testing.T) {
+	bst := newBST()
+	bst.Add(5)
+	bst.Add(6)
+	bst.Add(10)
+	bst.Add(1)
+	fmt.Println("Floor:", bst.Floor(7))
+}

@@ -277,6 +277,52 @@ func (b *BST) MinValueNR() int {
 	return root.val
 }
 
+func (b *BST) Remove(e int) {
+	b.root = b.remove(b.root, e)
+}
+
+// 删除以node为根的二分搜索树中值为e的节点, 递归算法
+// 返回删除节点后的二分搜索树的根
+func (b *BST) remove(node *node, e int) *node {
+	if node == nil {
+		return nil
+	}
+
+	if e < node.val {
+		node.left = b.remove(node.left, e)
+		return node
+	} else if e > node.val {
+		node.right = b.remove(node.right, e)
+		return node
+	} else {
+		// 待删除的节点左子数为空的情况
+		if node.left == nil {
+			right := node.right
+			node.right = nil
+			b.size--
+			return right
+		}
+		// 待删除元素右子数为空的情况
+		if node.right == nil {
+			left := node.left
+			node.left = nil
+			b.size--
+			return left
+		}
+
+		// 待删除元素左右子树都不为空的情况
+		// 找到比待删除节点大的最小节点，即待删除节点右子树的最小节点
+		successor := b.minimum(node.right)
+		// 用这个节点顶替待删除节点的位置
+		successor.right = b.removeMin(node.right)
+		successor.left = node.left
+		node.left = nil
+		node.right = nil
+		return successor
+
+	}
+}
+
 // 层序遍历
 func (b *BST) LevelOrder() {
 	queue := newQueue()
@@ -291,4 +337,28 @@ func (b *BST) LevelOrder() {
 			queue.enQueue(cur.right)
 		}
 	}
+}
+
+func (b *BST) Floor(e int) int {
+	return b.floor(b.root, e).val
+}
+
+func (b *BST) floor(node *node, e int) *node {
+	if node == nil {
+		return nil
+	}
+
+	if e == node.val {
+		return node
+	}
+
+	if e < node.val {
+		return b.floor(node.left, e)
+	}
+
+	result := b.floor(node.right, e)
+	if result != nil {
+		return result
+	}
+	return node
 }
