@@ -99,7 +99,7 @@ func (b *BST) String() string {
 	return str
 }
 
-func newBST() *BST {
+func New() *BST {
 	return &BST{
 		root: nil,
 		size: 0,

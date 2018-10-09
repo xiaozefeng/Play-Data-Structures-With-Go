@@ -7,7 +7,7 @@ import (
 )
 
 func TestBST(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	numbers := []int{5, 3, 6, 8, 4, 2}
 	for _, val := range numbers {
 		bst.Add(val)
@@ -39,7 +39,7 @@ func TestBST(t *testing.T) {
 }
 
 func TestBST_RemoveMin(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	n := 10000
 	for i := 0; i < n; i++ {
 		bst.Add(rand.Intn(n))
@@ -64,7 +64,7 @@ func TestBST_RemoveMin(t *testing.T) {
 }
 
 func TestBST_RemoveMax(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	n := 10000
 	for i := 0; i < n; i++ {
 		bst.Add(rand.Intn(n))
@@ -91,7 +91,7 @@ func TestBST_RemoveMax(t *testing.T) {
 }
 
 func TestBST_Remove(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	for i := 0; i < 10; i++ {
 		bst.Add(i)
 	}
@@ -102,7 +102,7 @@ func TestBST_Remove(t *testing.T) {
 }
 
 func TestBST_Floor(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	bst.Add(5)
 	bst.Add(6)
 	bst.Add(10)
@@ -111,7 +111,7 @@ func TestBST_Floor(t *testing.T) {
 }
 
 func TestBST_Rank(t *testing.T) {
-	bst := newBST()
+	bst := New()
 	bst.Add(41)
 	bst.Add(22)
 	bst.Add(15)
