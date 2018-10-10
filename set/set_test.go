@@ -16,17 +16,18 @@ func TestAdd(t *testing.T) {
 	bst.add("d")
 	bst.add("a")
 	bst.add("a")
+	bst.add("A")
 	fmt.Println(bst)
 	fmt.Println("max", bst.maximum())
 	fmt.Println("min", bst.minimum())
 
-	fmt.Printf("移除最大元素%s后二叉树:%s\n", bst.removeMaximum(), bst)
-	fmt.Printf("移除最小元素%s后二叉树:%s\n", bst.removeMinimum(), bst)
+	fmt.Printf("移除最大元素%s后二叉树:%s\n", bst.removeMaximum().val, bst)
+	fmt.Printf("移除最小元素%s后二叉树:%s\n", bst.removeMinimum().val, bst)
 
 }
 
 func TestBSTSet(t *testing.T) {
-	set := New()
+	set := NewBSTSet()
 	file, err := os.Open("/Users/xiaozefeng/Desktop/a-tale-of-two-cities.txt")
 	if err != nil {
 		panic(err)

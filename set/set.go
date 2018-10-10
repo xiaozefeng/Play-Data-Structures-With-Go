@@ -13,7 +13,7 @@ type Set interface {
 	Contains(e string) bool
 }
 
-func New() Set {
+func NewBSTSet() Set {
 	return &BSTSet{bst: newBst()}
 }
 
