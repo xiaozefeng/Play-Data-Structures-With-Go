@@ -1,8 +1,10 @@
 package set
 
 import (
+	"bufio"
 	"fmt"
-	"io/ioutil"
+	"io"
+	"os"
 	"strings"
 	"testing"
 )
@@ -23,14 +25,24 @@ func TestAdd(t *testing.T) {
 }
 
 func TestBSTSet(t *testing.T) {
-	bytes, err := ioutil.ReadFile("/Users/xiaozefeng/Desktop/a-tale-of-two-cities.txt")
+	set := New()
+	file, err := os.Open("/Users/xiaozefeng/Desktop/a-tale-of-two-cities.txt")
 	if err != nil {
 		panic(err)
 	}
-	fields := strings.Fields(string(bytes))
-	set := New()
-	for _, v := range fields {
-		set.Add(v)
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+	for {
+		line, _, err := reader.ReadLine()
+		if err == io.EOF {
+			break
+		}
+		fields := strings.Fields(string(line))
+		for _, v := range fields {
+			set.Add(v)
+		}
 	}
-	fmt.Println("元素格式:", set.Size())
+	fmt.Println("bst size:", set.Size())
+
 }
