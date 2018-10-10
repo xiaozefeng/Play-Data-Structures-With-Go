@@ -15,6 +15,7 @@ func TestAdd(t *testing.T) {
 	bst.add("c")
 	bst.add("d")
 	bst.add("a")
+	bst.add("a")
 	fmt.Println(bst)
 	fmt.Println("max", bst.maximum())
 	fmt.Println("min", bst.minimum())
