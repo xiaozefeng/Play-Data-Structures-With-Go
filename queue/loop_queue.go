@@ -4,7 +4,7 @@ import "fmt"
 
 type LoopQueue struct {
 	data              []int
-	front, tail, szie int
+	front, tail, size int
 }
 
 func NewLoopQueue() Queue {
@@ -19,12 +19,12 @@ func NewLoopQueueWithCapacity(capacity int) Queue {
 		data:  make([]int, capacity+1, capacity+1),
 		front: 0,
 		tail:  0,
-		szie:  0,
+		size:  0,
 	}
 }
 
 func (q *LoopQueue) Size() int {
-	return q.szie
+	return q.size
 }
 
 // while the front == tail , the queue is empty
@@ -41,7 +41,7 @@ func (q *LoopQueue) Enqueue(e int) {
 	q.data[q.tail] = e
 	// because this queue is loop queue, use (index +1)% data.length to get correct index
 	q.tail = (q.tail + 1) % len(q.data)
-	q.szie++
+	q.size++
 }
 
 func (q *LoopQueue) Dequeue() int {
@@ -50,7 +50,7 @@ func (q *LoopQueue) Dequeue() int {
 	}
 	ret := q.data[q.front]
 	q.front = (q.front + 1) % len(q.data)
-	q.szie--
+	q.size--
 	// reduce capacity by half when only a quarter of the space is utilized
 	if q.Size() == q.getCapacity()/4 && q.getCapacity()/2 != 0 {
 		q.resize(len(q.data) / 2)
@@ -75,8 +75,8 @@ func (q *LoopQueue) resize(newCapacity int) {
 	newData := make([]int, newCapacity+1, newCapacity+1)
 	for i := 0; i < q.Size(); i++ {
 		// put the `front`+ i  position of origin array into the new array
-		lenght := len(q.data)
-		newData[i] = q.data[(q.front+i)%lenght]
+		length := len(q.data)
+		newData[i] = q.data[(q.front+i)%length]
 	}
 	q.data = newData
 	q.front = 0
